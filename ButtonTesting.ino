@@ -12,7 +12,7 @@ Servo spinWheel;
 #define SERVOMIN  75 // This is the 'minimum' pulse length count (out of 4096)
 #define SERVOMAX  435 // This is the 'maximum' pulse length count (out of 4096) //BOTH ABOVE FOR ARM
 #define SERVO_FREQ 50 // Analog servos run at ~50 Hz updates
-#define USMIN  2000 // This is the rounded 'minimum' microsecond length based on the minimum pulse of 150
+#define USMIN  2200 // This is the rounded 'minimum' microsecond length based on the minimum pulse of 150
 #define USMAX  2400 // This is the rounded 'maximum' microsecond length based on the maximum pulse of 600
 int lastButtonStateForward;    // the previous state of button
 int currentButtonStateForward; // the current state of button
@@ -48,11 +48,12 @@ void loop() {
       lastDirection = 1;
     }
     delay(1000);
-    for (int time = 2 ; time > 0; time--) {
+    for (int time = 1 ; time > 0; time--) {
       for (uint16_t microsec = USMAX; microsec > USMIN; microsec--) {
-        pwm.writeMicroseconds(0, microsec);
+        pwm.writeMicroseconds(7, microsec);
+        delay(25);
       }
-      pwm.writeMicroseconds(0, 0);
+      pwm.writeMicroseconds(7, 0);
     }
   }
   else if (lastButtonStateBackward == HIGH && currentButtonStateBackward == LOW) {
@@ -65,12 +66,13 @@ void loop() {
       lastDirection = 0;
     }
     delay(1000);
-    for (int time = 2 ; time > 0; time--) {
+    for (int time = 1 ; time > 0; time--) {
       for (uint16_t microsec = 1000; microsec > 500; microsec--) {
-        pwm.writeMicroseconds(0, microsec);
+        pwm.writeMicroseconds(7, microsec);
+        delay(25);
       }
       delay(1);
-      pwm.writeMicroseconds(0, 0);
+      pwm.writeMicroseconds(7, 0);
     }
   }
   else {
